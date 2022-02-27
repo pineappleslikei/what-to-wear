@@ -200,7 +200,3 @@ def _fetch_clothing_options(temp_category):
         ]
     }
     return clothing[temp_category]
-
-
-if __name__ == '__main__':
-    app.run()
