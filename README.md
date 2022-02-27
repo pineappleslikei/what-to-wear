@@ -1,4 +1,5 @@
 # What To Wear
+[View the site](https://what-should-i-wear-today.herokuapp.com/)
 > *As a Patagonia fanatic, it was my ~~pleasure~~ duty to create this web app*
 
 ## Features
