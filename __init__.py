@@ -10,50 +10,36 @@ from flask import (
 )
 import requests
 
-def create_app(test_config=None):
-    #create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-    )
-
-    if test_config is None:
-        #load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+app = Flask(__name__)
     
-    @app.route('/', methods=('GET', 'POST'))
-    def home():
-        page_data = {
-            'temperature': None,
-            'clothing': None
-        }
+@app.route('/', methods=('GET', 'POST'))
+def home():
+    page_data = {
+        'temperature': None,
+        'clothing': None
+    }
 
-        if request.method == 'POST':
-            zipcode = request.form['zipcode']
-            error = None
+    if request.method == 'POST':
+        zipcode = request.form['zipcode']
+        error = None
 
-            if not zipcode:
-                error = 'Zip code is required'
-            
-            # fetch the weather for zip code
+        if not zipcode:
+            error = 'Zip code is required'
+        
+        # fetch the weather for zip code
+        if error is None:
+            weather = _get_weather(zipcode)
+            error = weather.get('error', {}).get('message', None)
             if error is None:
-                weather = _get_weather(zipcode)
-                error = weather.get('error', {}).get('message', None)
-                if error is None:
-                    page_data['temperature'] = weather.get('current', {}).get('feelslike_f', None)
-            
-            if page_data['temperature']:
-                page_data['clothing'] = _get_clothes(page_data['temperature'])
-            
-            if error:
-                flash(error)
+                page_data['temperature'] = weather.get('current', {}).get('feelslike_f', None)
+        
+        if page_data['temperature']:
+            page_data['clothing'] = _get_clothes(page_data['temperature'])
+        
+        if error:
+            flash(error)
 
-        return render_template('home.html', **page_data)
-    
-    return app
+    return render_template('home.html', **page_data)
 
 
 def _get_weather(zipcode):
@@ -214,3 +200,7 @@ def _fetch_clothing_options(temp_category):
         ]
     }
     return clothing[temp_category]
+
+
+if __name__ == '__main__':
+    app.run()
