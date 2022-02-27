@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    What To Wear
+{% endblock  %}
+
+{% block content %}
+<p>
+    Give us your zip code and we'll tell you what Patagonia™ clothing you need to wear to stay comfortable today!
+</p>
+    <form method="post">
+        <label for="zipcode">Zip Code</label>
+        <input name="zipcode" id="zipcode" required>
+        <input type="submit" value="Submit">
+    </form>
+    {% if temperature %}
+    <div >
+        <h2 class="temp">Current Temp feels like: {{ temperature }}°F</h2>
+    </div>
+    {% endif %}
+    
+    {% if clothing %}
+        <div class="content-column">
+            {% for item in clothing %}
+            <a href="{{ item['store_link'] }}" target="_blank">
+                <img class="outfit-img outfit-size grow-on-hover" src="{{ url_for('static', filename=item['img_file']) }}" alt="">
+            </a>
+            {% endfor %}    
+        </div>
+
+    {% else %}
+        <div class="content-column">
+            <img class="outfit-size" src="{{ url_for('static', filename='stick-guy.png') }}" alt="placeholder-image">
+        </div>
+    {% endif %}
+
+{% endblock  %}
