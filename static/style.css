@@ -81,3 +81,14 @@ p {
     width: auto;
     padding: 5px;
 }
+
+/* add mobile formatting */
+@media (max-width: 400px) {
+    .outfit-size {
+        width: 80vw;
+        height: auto;
+    }
+    p {
+        width: 90vw;
+    }
+}
