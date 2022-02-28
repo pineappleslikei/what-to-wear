@@ -23,13 +23,16 @@ def home():
         zipcode = request.form['zipcode']
         error = None
 
-        if not zipcode:
-            error = 'Zip code is required'
+        valid_zip_input = _validate_zip_code_input(zipcode)
+
+        if not zipcode or not valid_zip_input:
+            error = 'Valid 5-digit zip code is required!'
         
         # fetch the weather for zip code
         if error is None:
             weather = _get_weather(zipcode)
             error = weather.get('error', {}).get('message', None)
+            
             if error is None:
                 page_data['temperature'] = weather.get('current', {}).get('feelslike_f', None)
         
@@ -40,6 +43,26 @@ def home():
             flash(error)
 
     return render_template('home.html', **page_data)
+
+
+def _validate_zip_code_input(some_value):
+    # zip codes have 5 digits
+    if len(some_value) != 5:
+        return False
+    
+    # each digit should be an int inbetween 0 and 9 (inclusive)
+    for char in some_value:
+        try:
+            digit = int(char)
+            if digit not in range(0, 10):
+                return False
+        except ValueError:
+            return False
+
+    # if the value makes it this far, fairly likely to be a zip
+    # the weather API will let us know if this does not correspond to a real location
+    return True
+    
 
 
 def _get_weather(zipcode):
@@ -200,3 +223,7 @@ def _fetch_clothing_options(temp_category):
         ]
     }
     return clothing[temp_category]
+
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET')
+if os.getenv('DEV') == 'ON':
+    app.run(debug=True)

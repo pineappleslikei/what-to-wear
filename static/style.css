@@ -17,6 +17,12 @@ nav {
     border-color: #000000;
 }
 
+.flash {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #ff9924;
+}
+
 p {
     text-align: center;
 }
