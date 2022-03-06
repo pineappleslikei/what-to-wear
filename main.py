@@ -46,12 +46,14 @@ def home():
 
 
 def _validate_zip_code_input(some_value):
+    str_value = str(some_value)
+    
     # zip codes have 5 digits
-    if len(some_value) != 5:
+    if len(str_value) != 5:
         return False
     
     # each digit should be an int inbetween 0 and 9 (inclusive)
-    for char in some_value:
+    for char in str_value:
         try:
             digit = int(char)
             if digit not in range(0, 10):
@@ -225,5 +227,6 @@ def _fetch_clothing_options(temp_category):
     return clothing[temp_category]
 
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET')
+
 if os.getenv('DEV') == 'ON':
     app.run(debug=True)
