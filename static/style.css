@@ -4,6 +4,12 @@
 body {
     margin: 0;
     padding: 10;
+    background-color: #f5f3ef;
+}
+
+#bootstrap-overrides {
+    margin: 0;
+    padding: 0;
 }
 
 nav {
@@ -15,12 +21,6 @@ nav {
     border-bottom: solid;
     border-width: 2px;
     border-color: #000000;
-}
-
-.flash {
-    font-weight: bold;
-    text-decoration: underline;
-    color: #ff9924;
 }
 
 p {
@@ -54,7 +54,11 @@ p {
     padding: 10px;
 }
 
-.temp {
+.zip-form {
+    text-align: center;
+}
+
+.temperature {
     color: whitesmoke;
     text-shadow: -2px -1px 2px rgba(0, 0, 0, 0.37);
     font-family: 'Tinos', serif;
@@ -67,9 +71,18 @@ p {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.37);
 }
 
-.outfit-img {
+.outfit-card {
     border-radius: 15px;
+    overflow: hidden;
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.37));
+    margin: 5px;
+}
+
+.card-description {
+    border-top: 1px solid rgba(133, 133, 133, 0.534);
+    align-items: center;
+    text-align: center;
+    padding: 5px 0 5px 0;
 }
 
 .grow-on-hover {
@@ -79,13 +92,12 @@ p {
 }
 
 .grow-on-hover:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 .outfit-size {
     height: 500px;
     width: auto;
-    padding: 5px;
 }
 
 /* add mobile formatting */
