@@ -120,21 +120,30 @@ def _get_clothes(temperature):
     '''
 
     # int() will just cut off decimal, call round() first
-    input_temp = int(round(float(temperature)))
+    input_temp = _clean_temperature_input(temperature)
 
     # check which range the input temp falls into
-    temp_category = None
-    for cat in Category:
-        if input_temp in cat.value:
-            temp_category = cat
-            break
-    
+    temp_category = _get_temp_category(input_temp)
     if temp_category:
         clothing = _fetch_clothing_options(temp_category)
         return clothing
     
     # return the appropriate clothing
     return None
+
+
+def _clean_temperature_input(raw_temp):
+    return int(round(float(raw_temp)))
+
+
+def _get_temp_category(clean_temp):
+    temp_category = None
+    for cat in Category:
+        if clean_temp in cat.value:
+            temp_category = cat
+            break
+    
+    return temp_category
 
 
 CLOTHING_DATA = {
