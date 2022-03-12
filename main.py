@@ -46,12 +46,14 @@ def home():
 
 
 def _validate_zip_code_input(some_value):
+    str_value = str(some_value)
+    
     # zip codes have 5 digits
-    if len(some_value) != 5:
+    if len(str_value) != 5:
         return False
     
     # each digit should be an int inbetween 0 and 9 (inclusive)
-    for char in some_value:
+    for char in str_value:
         try:
             digit = int(char)
             if digit not in range(0, 10):
@@ -118,21 +120,30 @@ def _get_clothes(temperature):
     '''
 
     # int() will just cut off decimal, call round() first
-    input_temp = int(round(float(temperature)))
+    input_temp = _clean_temperature_input(temperature)
 
     # check which range the input temp falls into
-    temp_category = None
-    for cat in Category:
-        if input_temp in cat.value:
-            temp_category = cat
-            break
-    
+    temp_category = _get_temp_category(input_temp)
     if temp_category:
         clothing = _fetch_clothing_options(temp_category)
         return clothing
     
     # return the appropriate clothing
     return None
+
+
+def _clean_temperature_input(raw_temp):
+    return int(round(float(raw_temp)))
+
+
+def _get_temp_category(clean_temp):
+    temp_category = None
+    for cat in Category:
+        if clean_temp in cat.value:
+            temp_category = cat
+            break
+    
+    return temp_category
 
 
 CLOTHING_DATA = {
@@ -225,5 +236,6 @@ def _fetch_clothing_options(temp_category):
     return clothing[temp_category]
 
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET')
+
 if os.getenv('DEV') == 'ON':
     app.run(debug=True)
