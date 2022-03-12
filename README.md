@@ -1,4 +1,6 @@
 # What To Wear
+[![Dev](https://github.com/pineappleslikei/what-to-wear/actions/workflows/dev.yaml/badge.svg?branch=dev)](https://github.com/pineappleslikei/what-to-wear/actions/workflows/dev.yaml)
+
 [View the site](https://what-should-i-wear-today.herokuapp.com/)
 > *As a Patagonia fanatic, it was my ~~pleasure~~ duty to create this web app*
 
